@@ -1,15 +1,37 @@
-struct Character {
-    strength: u8,
-    dexterity: u8,
-    constitution: u8,
-    wisdom: u8,
-    intelligence: u8,
-    charisma: u8,
-    name: String
+#[derive(Debug)]
+enum Direction{
+    N,
+    NE,
+    E,
+    SE,
+    S,
+    SW,
+    W,
+    NW
 }
 
-fn main(){
-    let char = Character{strength: 9, dexterity: 9, constitution: 9, wisdom: 9, intelligence: 9, charisma :9,
-        name: "Generic AD&D Hero".to_string()    };
-    println!("Character's name is {}, and his/her strength is {}", char.name, char.strength);
+enum PlayerAction{
+    Move{
+        direction: Direction,
+        speed: u8,
+    },
+    Wait,
+    Attack(Direction),
+}
+
+fn main() {
+    let simulated_player_action = PlayerAction::Move{
+        direction: Direction::NE,
+        speed: 2,
+    };
+
+    match simulated_player_action {
+        PlayerAction::Wait => println!("Player wants to wait"),
+        PlayerAction::Move {direction,speed}=>{
+            println!("Player wants to move in direction {:?} with speed {}", direction, speed)
+        }
+        PlayerAction::Attack(direction) =>{
+            println!("Player wants to attack direction {:?}", direction)
+        }
+    };
 }
